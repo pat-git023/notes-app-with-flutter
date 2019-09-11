@@ -1,0 +1,24 @@
+opt_out_usage
+# Uncomment the line if you want fastlane to automatically update itself
+update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Submit a new Beta Build to AppCenter"
+  lane :beta do
+    appcenter_upload(
+      app_name: "Notes-App-Android",
+      apk: "../build/app/outputs/apk/release/app-release.apk",
+      notify_testers: true # Set to false if you don't want to notify testers of your new release (default: `false`)
+    )
+    slack(message: "App successfully built!")
+  end
+
+  error do |lane, exception, options|
+    slack(message: "Lane failed with exception : #{exception.message}", success: false)
+    UI.build_failure!(exception)
+  end
+
+end
