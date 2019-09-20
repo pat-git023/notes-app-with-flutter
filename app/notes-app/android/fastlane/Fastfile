@@ -28,7 +28,12 @@ platform :android do
       notify_testers: true,
       release_notes: lane_context[SharedValues::FL_CHANGELOG]
     )
-    slack(message: "App successfully built!")
+    slack(
+      message: "App successfully built!",
+      payload: {
+        "Download URL" => lane_context[SharedValues::APPCENTER_DOWNLOAD_LINK]
+      }
+    )
   end
 
   error do |lane, exception, options|
