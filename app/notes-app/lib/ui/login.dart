@@ -1,9 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/ui/home.dart';
 import 'package:notes_app/util/google_auth.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:notes_app/ui/error.dart';
 
 class LoginPage extends StatelessWidget {
+  LoginPage({Key key, this.analytics, this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,19 +28,41 @@ class LoginPage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
                 color: Colors.grey,
                 onPressed: () => {
-                  GoogleAuth()
-                      .handleSignIn()
-                      .then((FirebaseUser user) => {
-                            print(user),
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        MyHomePage(
-                                          user: user,
-                                        )))
-                          })
-                      .catchError((e) => print(e))
+                  GoogleAuth().handleSignIn().then((FirebaseUser user) {
+                    Crashlytics.instance.log("successfull login: $user");
+                    analytics.logEvent(
+                        name: 'login_success',
+                        parameters: <String, dynamic>{
+                          "userid": user.uid,
+                          "name": user.displayName,
+                          "email": user.email
+                        });
+                    analytics.logEvent(
+                        name: 'login',
+                        parameters: <String, dynamic>{
+                          "method": "google_sign_in",
+                          "userid": user.uid,
+                          "name": user.displayName,
+                          "email": user.email
+                        });
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => MyHomePage(
+                                  user: user,
+                                )));
+                  }).catchError((e) {
+                    analytics.logEvent(
+                        name: 'login_error',
+                        parameters: <String, dynamic>{"error": e});
+                    Crashlytics.instance.log("error during login: $e");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => ErrorPage(
+                                  errorMessage: e.message,
+                                )));
+                  })
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

@@ -38,6 +38,9 @@
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/android/**/google-services.json
+**/**/local.properties
+**/android/key.properties
+**/android/**/android_release.jks
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -64,6 +67,7 @@
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/**/flutter_export_environment.sh
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3

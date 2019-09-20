@@ -8,10 +8,25 @@ platform :android do
 
   desc "Submit a new Beta Build to AppCenter"
   lane :beta do
+    build_number = number_of_commits()  
+    Dir.chdir "../.." do
+      sh("flutter", "packages", "get")
+      sh("flutter", "clean")
+      sh("flutter", "build", "apk", "--release", "--build-number=#{build_number}")
+    end
+
+    changelog_from_git_commits(
+      pretty: "- %s",
+      date_format: "short",
+      match_lightweight_tag: false,
+      commits_count: 5,
+    )
+    
     appcenter_upload(
       app_name: "Notes-App-Android",
       apk: "../build/app/outputs/apk/release/app-release.apk",
-      notify_testers: true # Set to false if you don't want to notify testers of your new release (default: `false`)
+      notify_testers: true,
+      release_notes: lane_context[SharedValues::FL_CHANGELOG]
     )
     slack(message: "App successfully built!")
   end
