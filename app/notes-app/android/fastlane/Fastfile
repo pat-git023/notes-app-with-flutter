@@ -10,8 +10,6 @@ platform :android do
   lane :beta do
     build_number = number_of_commits()  
     Dir.chdir "../.." do
-      sh("flutter", "packages", "get")
-      sh("flutter", "clean")
       sh("flutter", "build", "apk", "--release", "--build-number=#{build_number}")
     end
 

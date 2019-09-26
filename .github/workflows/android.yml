@@ -7,6 +7,8 @@ jobs:
 
     runs-on: macOS-latest
 
+    timeout-minutes: 70
+
     steps:
     - uses: actions/checkout@v1
     - name: set up JDK 1.8
