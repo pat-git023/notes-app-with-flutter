@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
@@ -51,20 +52,22 @@ class _EditNoteState extends State<EditNote> {
       ),
       body: Column(
         children: <Widget>[
-          TextField(
-            controller: noteController,
-            decoration: InputDecoration(
-                border: InputBorder.none, hintText: 'Enter your note'),
-            keyboardType: TextInputType.multiline,
-            maxLines: null,
+          Expanded(
+            child: TextField(
+              controller: noteController,
+              decoration: InputDecoration(
+                  border: InputBorder.none, hintText: 'Enter your note'),
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+            ),
+          ),
+          RaisedButton(
+            color: Colors.grey,
+            child: note == null ? Text("Save") : Text("Update"),
+            onPressed: () => {saveOrUpdateText()},
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-          child: FlatButton(
-        child: note == null ? Text("Save") : Text("Update"),
-        onPressed: () => {saveOrUpdateText()},
-      )),
     );
   }
 
@@ -73,7 +76,9 @@ class _EditNoteState extends State<EditNote> {
       await Firestore.instance
           .collection(user.uid)
           .document(note.id)
-          .updateData({'note': base64.encode(utf8.encode(noteController.text))}).then((v) {
+          .updateData({
+        'note': base64.encode(utf8.encode(noteController.text))
+      }).then((v) {
         print('Note updated');
         Navigator.pop(context);
       }).catchError((error) {
