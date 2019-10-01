@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'ui/login.dart';
-import 'ui/home.dart';
 import 'ui/splash.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -28,11 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       home: SplashPage(),
       routes: <String, WidgetBuilder>{
-        '/home': (BuildContext context) => MyHomePage(),
-        '/login': (BuildContext context) => LoginPage(
-              analytics: analytics,
-              observer: observer,
-            ),
+        '/login': (BuildContext context) => LoginPage(),
       },
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),

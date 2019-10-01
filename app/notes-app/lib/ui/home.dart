@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -7,7 +9,9 @@ import 'package:notes_app/ui/note_card.dart';
 import 'package:notes_app/ui/note_edit.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.user}) : super(key: key);
+  MyHomePage({
+    Key key, 
+    @required this.user}) : super(key: key);
 
   final String title = 'Notes App';
   final FirebaseUser user;
@@ -17,6 +21,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   FirebaseUser user;
 
   @override
@@ -75,6 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     return NoteCard(
                       user: this.user,
                       note: Note.fromMap(document.data, document.documentID),
+                      analytics: analytics,
+                      observer: observer,
                     );
                   }).toList(),
                 );

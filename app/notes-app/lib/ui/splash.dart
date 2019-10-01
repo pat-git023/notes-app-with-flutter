@@ -3,6 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'home.dart';
 
 class SplashPage extends StatefulWidget {
+  SplashPage({
+    Key key,}) : super(key: key);
+
+    
   @override
   @override
   _SplashPageState createState() => _SplashPageState();

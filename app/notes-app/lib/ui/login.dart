@@ -8,10 +8,11 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:notes_app/ui/error.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key key, this.analytics, this.observer}) : super(key: key);
+  LoginPage({Key key}) : super(key: key);
 
-  final FirebaseAnalytics analytics;
-  final FirebaseAnalyticsObserver observer;
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,22 +30,10 @@ class LoginPage extends StatelessWidget {
                 color: Colors.grey,
                 onPressed: () => {
                   GoogleAuth().handleSignIn().then((FirebaseUser user) {
-                    Crashlytics.instance.log("successfull login: $user");
-                    analytics.logEvent(
-                        name: 'login_success',
-                        parameters: <String, dynamic>{
-                          "userid": user.uid,
-                          "name": user.displayName,
-                          "email": user.email
-                        });
-                    analytics.logEvent(
-                        name: 'login',
-                        parameters: <String, dynamic>{
-                          "method": "google_sign_in",
-                          "userid": user.uid,
-                          "name": user.displayName,
-                          "email": user.email
-                        });
+                    analytics
+                        .logEvent(name: 'login', parameters: <String, dynamic>{
+                      "method": "google_sign_in",
+                    });
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
