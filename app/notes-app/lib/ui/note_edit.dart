@@ -36,7 +36,6 @@ class _EditNoteState extends State<EditNote> {
       if (note != null) {
         setState(() {
           noteController.text = note.text;
-          _isSaveEnabled = true;
         });
       }
     } else {
@@ -62,36 +61,39 @@ class _EditNoteState extends State<EditNote> {
           ),
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: TextField(
-              controller: noteController,
-              onChanged: (text) => {
-                if (text.length > 0)
-                  {
-                    setState(() {
-                      _isSaveEnabled = true;
-                    }),
-                  }
-                else
-                  {
-                    setState(() {
-                      _isSaveEnabled = false;
-                    }),
-                  }
-              },
-              decoration: InputDecoration(
-                  border: InputBorder.none, hintText: 'Enter your text here'),
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15.0),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: TextField(
+                controller: noteController,
+                onChanged: (text) => {
+                  if (text.length > 0 && note == null || note.text != text)
+                    {
+                      setState(() {
+                        _isSaveEnabled = true;
+                      }),
+                    }
+                  else
+                    {
+                      setState(() {
+                        _isSaveEnabled = false;
+                      }),
+                    }
+                },
+                decoration: InputDecoration(
+                    border: InputBorder.none, hintText: 'Enter your text here'),
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+              ),
             ),
-          ),
-          RaisedButton(
-            child: note == null ? Text("Save") : Text("Update"),
-            onPressed: _isSaveEnabled ? () => {saveOrUpdateText()} : null,
-          ),
-        ],
+            RaisedButton(
+              child: note == null ? Text("Save") : Text("Update"),
+              onPressed: _isSaveEnabled ? () => {saveOrUpdateText()} : null,
+            ),
+          ],
+        ),
       ),
     );
   }
