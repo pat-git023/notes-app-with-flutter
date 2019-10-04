@@ -36,6 +36,12 @@ class NoteCard extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+              color: Colors.white38,
+            ),
+          ),
           child: Padding(
             padding: EdgeInsets.all(15.0),
             child: Column(
