@@ -26,6 +26,36 @@ platform :android do
       notify_testers: true,
       release_notes: lane_context[SharedValues::FL_CHANGELOG]
     )
+    
+    firebase_app_distribution(
+      app: $FIREBASE_APP_ID,
+      groups: "BETA",
+      release_notes: lane_context[SharedValues::FL_CHANGELOG],
+      firebase_cli_path: "$HOME/firebase_tools"
+    )
+
+    slack(
+      message: "App successfully built!",
+      payload: {
+        "Download URL" => lane_context[SharedValues::APPCENTER_DOWNLOAD_LINK]
+      }
+    )
+  end
+
+
+  lane :bundle do
+    build_number = number_of_commits()  
+    Dir.chdir "../.." do
+      sh("flutter", "build", "appbundle", "--release", "--build-number=#{build_number}")
+    end
+
+    changelog_from_git_commits(
+      pretty: "- %s",
+      date_format: "short",
+      match_lightweight_tag: false,
+      commits_count: 5,
+    )
+    
     slack(
       message: "App successfully built!",
       payload: {

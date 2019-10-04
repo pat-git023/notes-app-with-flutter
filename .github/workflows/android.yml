@@ -15,21 +15,31 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+
     - name: download Flutter
-      run: wget --quiet --output-document=$HOME/flutter-sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.9.1+hotfix.2-stable.zip
+      run: wget --quiet --output-document=$HOME/flutter-sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.9.1+hotfix.4-stable.zip
+    
     - name: install Flutter
-      run: /usr/bin/unzip -q $HOME/flutter-sdk.zip -d $HOME 
+      run: /usr/bin/unzip -q $HOME/flutter-sdk.zip -d $HOME
+    
     - name: set up Flutter tools 
       run: export PATH="$PATH:$HOME/flutter/bin" && flutter precache
+
+    - name: install firebase tools
+      run: wget --output-document=$HOME/firebase_tools https://firebase.tools/bin/macos/latest && export PATH="$PATH:$HOME/firebase_tools"
+    
     - name: set up secrets
       run: cd app/notes-app/android/ && echo -n $ANDROID_KEYPROPERTIES | base64 -D > key.properties && echo -n $ANDROID_KEYSTORE | base64 -D > app/android_release.jks && echo $GOOGLE_SECRETS > app/google-services.json
       env:
         GOOGLE_SECRETS: ${{ secrets.GOOGLE_SECRETS }}
         ANDROID_KEYPROPERTIES: ${{ secrets.ANDROID_KEYPROPERTIES }}
         ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+    
     - name: Build Android APK
-      run: export PATH="$PATH:$HOME/flutter/bin" && cd app/notes-app/android/ && fastlane android beta
+      run: export PATH="$PATH:$HOME/flutter/bin" && cd app/notes-app/android/ && fastlane android beta && fastlane android bundle
       env:
         SLACK_URL: ${{ secrets.SLACK_URL}}
         APPCENTER_API_TOKEN: ${{ secrets.APPCENTER_API_TOKEN }}
         APPCENTER_OWNER_NAME: ${{ secrets.APPCENTER_OWNER_NAME }}
+        FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
