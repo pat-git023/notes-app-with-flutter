@@ -29,6 +29,7 @@ platform :android do
     
     firebase_app_distribution(
       app: ENV["FIREBASE_APP_ID"],
+      apk_path: "../build/app/outputs/apk/release/app-release.apk",
       groups: "BETA",
       release_notes: lane_context[SharedValues::FL_CHANGELOG],
       firebase_cli_path: "/Users/runner/firebase_tools"
