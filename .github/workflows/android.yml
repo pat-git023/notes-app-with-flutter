@@ -26,7 +26,7 @@ jobs:
       run: export PATH="$PATH:$HOME/flutter/bin" && flutter precache
 
     - name: install firebase tools
-      run: wget --output-document=$HOME/firebase_tools https://firebase.tools/bin/macos/latest && export PATH="$PATH:$HOME/firebase_tools"
+      run: wget --output-document=$HOME/firebase_tools https://firebase.tools/bin/macos/latest && chmod +x $HOME/firebase_tools && export PATH="$PATH:$HOME/firebase_tools"
     
     - name: set up secrets
       run: cd app/notes-app/android/ && echo -n $ANDROID_KEYPROPERTIES | base64 -D > key.properties && echo -n $ANDROID_KEYSTORE | base64 -D > app/android_release.jks && echo $GOOGLE_SECRETS > app/google-services.json
