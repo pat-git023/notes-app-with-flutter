@@ -30,7 +30,8 @@ platform :android do
     firebase_app_distribution(
       app: $FIREBASE_APP_ID,
       groups: "BETA",
-      release_notes: lane_context[SharedValues::FL_CHANGELOG]
+      release_notes: lane_context[SharedValues::FL_CHANGELOG],
+      firebase_cli_path: "/Users/runner/firebase_tools"
     )
 
     slack(
