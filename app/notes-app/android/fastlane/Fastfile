@@ -7,7 +7,7 @@ default_platform(:android)
 platform :android do
 
   desc "Submit a new Beta Build to AppCenter"
-  lane :beta do
+  lane :alpha do
     build_number = number_of_commits()  
     Dir.chdir "../.." do
       sh("flutter", "build", "apk", "--release", "--build-number=#{build_number}")
@@ -23,6 +23,7 @@ platform :android do
     appcenter_upload(
       app_name: "Notes-App-Android",
       apk: "../build/app/outputs/apk/release/app-release.apk",
+      destinations: "Alpha", 
       notify_testers: true,
       release_notes: lane_context[SharedValues::FL_CHANGELOG]
     )
