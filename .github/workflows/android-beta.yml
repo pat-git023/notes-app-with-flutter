@@ -1,6 +1,9 @@
-name: Android CI
+name: Android CI [beta]
 
-on: [push]
+on:
+  push:
+    branches:
+      - beta
 
 jobs:
   build:
@@ -36,7 +39,7 @@ jobs:
         ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
     
     - name: Build Android APK
-      run: export PATH="$PATH:$HOME/flutter/bin" && cd app/notes-app/android/ && fastlane android alpha
+      run: export PATH="$PATH:$HOME/flutter/bin" && cd app/notes-app/android/ && fastlane android beta
       env:
         SLACK_URL: ${{ secrets.SLACK_URL}}
         APPCENTER_API_TOKEN: ${{ secrets.APPCENTER_API_TOKEN }}
