@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.dark(),
+      theme: ThemeData(brightness: Brightness.dark, primarySwatch: Colors.green),
       home: SplashPage(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
