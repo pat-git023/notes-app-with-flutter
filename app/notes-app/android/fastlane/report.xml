@@ -5,27 +5,37 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: opt_out_usage" time="0.0126831">
+      <testcase classname="fastlane.lanes" name="0: opt_out_usage" time="0.002656">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: update_fastlane" time="0.394467">
+      <testcase classname="fastlane.lanes" name="1: update_fastlane" time="3.433467">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: default_platform" time="0.0114314">
+      <testcase classname="fastlane.lanes" name="2: default_platform" time="0.002726">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: number_of_commits" time="0.068246">
+      <testcase classname="fastlane.lanes" name="3: number_of_commits" time="0.047355">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: flutter packages get" time="24.7688437">
+      <testcase classname="fastlane.lanes" name="4: flutter build apk --release --build-number=14" time="23.63094">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: changelog_from_git_commits" time="0.055488">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: appcenter_upload" time="10.197913">
         
       </testcase>
     

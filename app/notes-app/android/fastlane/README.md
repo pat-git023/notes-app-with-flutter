@@ -16,11 +16,21 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## Android
+### android alpha
+```
+fastlane android alpha
+```
+Submit a new Beta Build to AppCenter
 ### android beta
 ```
 fastlane android beta
 ```
-Submit a new Beta Build to AppCenter
+
+### android bundle
+```
+fastlane android bundle
+```
+
 
 ----
 

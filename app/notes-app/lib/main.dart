@@ -10,9 +10,6 @@ void main() {
 
   // Pass all uncaught errors from the framework to Crashlytics.
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
-  Crashlytics.instance.setUserEmail("patgit023@gmail.com");
-  Crashlytics.instance.setUserIdentifier("4711");
-  Crashlytics.instance.setUserName("Pat");
   runApp(MyApp());
 }
 
@@ -20,6 +17,7 @@ class MyApp extends StatelessWidget {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
