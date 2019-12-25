@@ -20,7 +20,7 @@ jobs:
         java-version: 1.8
 
     - name: download Flutter
-      run: wget --quiet --output-document=$HOME/flutter-sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.9.1+hotfix.4-stable.zip
+      run: wget --quiet --output-document=$HOME/flutter-sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.12.13+hotfix.5-stable.zip
     
     - name: install Flutter
       run: /usr/bin/unzip -q $HOME/flutter-sdk.zip -d $HOME
