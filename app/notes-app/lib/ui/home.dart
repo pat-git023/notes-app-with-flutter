@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:notes_app/model/note.dart';
+import 'package:notes_app/ui/burgermenu.dart';
 import 'package:notes_app/ui/note_card.dart';
 import 'package:notes_app/ui/note_edit.dart';
 
@@ -42,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      drawer: buildBurgerMenu(user),
       body: _buildNotesOverview(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
