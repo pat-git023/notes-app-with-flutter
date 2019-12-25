@@ -31,6 +31,11 @@ fastlane android beta
 fastlane android bundle
 ```
 
+### android flutter_upgrade
+```
+fastlane android flutter_upgrade
+```
+
 
 ----
 

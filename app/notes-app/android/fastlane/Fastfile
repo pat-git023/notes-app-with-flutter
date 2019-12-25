@@ -8,7 +8,8 @@ platform :android do
 
   desc "Submit a new Beta Build to AppCenter"
   lane :alpha do
-    build_number = number_of_commits()  
+    build_number = number_of_commits() 
+    flutter_upgrade() 
     Dir.chdir "../.." do
       sh("flutter", "build", "apk", "--release", "--build-number=#{build_number}")
     end
@@ -37,7 +38,8 @@ platform :android do
   end
 
   lane :beta do
-    build_number = number_of_commits()  
+    build_number = number_of_commits() 
+    flutter_upgrade() 
     Dir.chdir "../.." do
       sh("flutter", "build", "apk", "--release", "--build-number=#{build_number}")
     end
@@ -93,6 +95,13 @@ platform :android do
         "Download URL" => lane_context[SharedValues::APPCENTER_DOWNLOAD_LINK]
       }
     )
+  end
+
+  lane :flutter_upgrade do
+    Dir.chdir "../.." do
+      sh("flutter", "upgrade")
+      sh("yes | flutter", "doctor", "--android-licenses")
+    end
   end
 
   error do |lane, exception, options|
